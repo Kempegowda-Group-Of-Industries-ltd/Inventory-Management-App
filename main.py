@@ -263,20 +263,20 @@ def main():
                 st.error("Quantity must be a non-negative integer.", icon="🚨")
             else:
                 inventory.adjust_quantity(product_to_adjust, new_quantity)
-   elif option == "View Stock":
-       st.subheader("**Current Inventory** :open_file_folder:")
+     elif option == "View Stock":
+    st.subheader("**Current Inventory** :open_file_folder:")
 
-       cursor = inventory.conn.cursor()
-       cursor.execute('SELECT * FROM products')
-       rows = cursor.fetchall()
+    cursor = inventory.conn.cursor()
+    cursor.execute('SELECT * FROM products')
+    rows = cursor.fetchall()
 
-       for name, quantity in rows:
-          if "bakers" in name.lower():
+    for name, quantity in rows:
+        if "bakers" in name.lower():
             st.write(f"{name}: {quantity} bags.")
-          else:
+        else:
             st.write(f"{name}: {quantity} bales.")
 
-       df = pd.DataFrame(rows, columns=["Product", "Quantity"])
+    df = pd.DataFrame(rows, columns=["Product", "Quantity"])
 
     fig_bar, ax_bar = plt.subplots()
     df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
@@ -291,6 +291,7 @@ def main():
     ax_pie.axis("equal")
     ax_pie.set_title("Inventory Distribution")
     st.pyplot(fig_pie)
+
 
 
 
