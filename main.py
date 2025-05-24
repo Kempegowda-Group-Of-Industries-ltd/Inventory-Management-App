@@ -263,25 +263,21 @@ def main():
                 st.error("Quantity must be a non-negative integer.", icon="🚨")
             else:
                 inventory.adjust_quantity(product_to_adjust, new_quantity)
-    elif option == "View Stock":
-    st.subheader("**Current Inventory** :open_file_folder:")
+   elif option == "View Stock":
+       st.subheader("**Current Inventory** :open_file_folder:")
 
-    # Use your existing inventory connection
-    cursor = inventory.conn.cursor()
-    cursor.execute('SELECT * FROM products')
-    rows = cursor.fetchall()
+       cursor = inventory.conn.cursor()
+       cursor.execute('SELECT * FROM products')
+       rows = cursor.fetchall()
 
-    # Display inventory textually with conditional units
-    for name, quantity in rows:
-        if "bakers" in name.lower():
+       for name, quantity in rows:
+          if "bakers" in name.lower():
             st.write(f"{name}: {quantity} bags.")
-        else:
+          else:
             st.write(f"{name}: {quantity} bales.")
 
-    # Convert rows to DataFrame for charts
-    df = pd.DataFrame(rows, columns=["Product", "Quantity"])
+       df = pd.DataFrame(rows, columns=["Product", "Quantity"])
 
-    # Bar chart
     fig_bar, ax_bar = plt.subplots()
     df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
     ax_bar.set_title("Inventory Stock Levels")
@@ -290,7 +286,6 @@ def main():
     ax_bar.set_xticklabels(df["Product"], rotation=45)
     st.pyplot(fig_bar)
 
-    # Pie chart
     fig_pie, ax_pie = plt.subplots()
     ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
     ax_pie.axis("equal")
