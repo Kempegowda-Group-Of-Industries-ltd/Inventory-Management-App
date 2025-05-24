@@ -272,10 +272,10 @@ def main():
             else:
                 st.write(f"{name}: {quantity} bales.")
 
-          import sqlite3
-          import pandas as pd
-           import matplotlib.pyplot as plt
-          import streamlit as st
+import sqlite3
+import pandas as pd
+import matplotlib.pyplot as plt
+import streamlit as st         
 
 # Connect to DB and fetch data
 conn = sqlite3.connect('inventory.db')
