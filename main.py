@@ -277,7 +277,9 @@ import matplotlib.pyplot as plt
 
 
 # Create DataFrame
+inventory = Inventory()
 df = pd.DataFrame(inventory.db)
+print(df)
 
 # Generate bar chart
 fig_bar, ax_bar = plt.subplots()
