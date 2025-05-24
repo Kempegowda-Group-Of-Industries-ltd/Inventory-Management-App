@@ -285,25 +285,25 @@ class Inventory:
         df = pd.DataFrame(inventory.db)
             
 # Generate bar chart
-         fig_bar, ax_bar = plt.subplots()
-          df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
-           ax_bar.set_title("Inventory Stock Levels")
-            ax_bar.set_ylabel("Quantity")
-             ax_bar.set_xlabel("Product")
-             ax_bar.set_xticklabels(df["Product"], rotation=45)
+fig_bar, ax_bar = plt.subplots()
+df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
+ax_bar.set_title("Inventory Stock Levels")
+ax_bar.set_ylabel("Quantity")
+ax_bar.set_xlabel("Product")
+ax_bar.set_xticklabels(df["Product"], rotation=45)
 
 # Generate pie chart
-            fig_pie, ax_pie = plt.subplots()
-             ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
-              ax_pie.axis("equal")
-                 ax_pie.set_title("Inventory Distribution")
+fig_pie, ax_pie = plt.subplots()
+ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
+ax_pie.axis("equal")
+ax_pie.set_title("Inventory Distribution")
 
 # Save chart images
-                   fig_bar.savefig(bar_chart_path, bbox_inches="tight")
-                   fig_pie.savefig(pie_chart_path, bbox_inches="tight")
-                        df.to_csv(df_path, index=False)
- 
-                     (bar_chart_path, pie_chart_path, df_path)
+fig_bar.savefig(bar_chart_path, bbox_inches="tight")
+fig_pie.savefig(pie_chart_path, bbox_inches="tight")
+df.to_csv(df_path, index=False)
+
+# (bar_chart_path, pie_chart_path, df_path)  # This line seems out of place, maybe remove or use properly
 
 
 
