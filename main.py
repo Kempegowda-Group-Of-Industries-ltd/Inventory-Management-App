@@ -140,7 +140,7 @@ class Inventory:
         product_names = [row[0] for row in rows]
         return product_names
 
-
+ 
 def main():
     # Check if user is authenticated
     if not st.session_state.get("authentication_status"):
@@ -273,11 +273,6 @@ def main():
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Sample inventory data (like what's fetched from SQLite)
-inventory_data = {
-    "Product": ["Taifa 1kg", "Bahari 2kg", "Bakers 25kg", "Chenga 1kg"],
-    "Quantity": [120, 80, 45, 150]
-}
 
 # Create DataFrame
 df = pd.DataFrame(inventory_data)
