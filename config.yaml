@@ -2,23 +2,20 @@ cookie:
   expiry_days: 30
   key: taifa
   name: feeding
-
 credentials:
   usernames:
-    admin:
+    bkaitany:
       email: suhas11533@gmail.com
       failed_login_attempts: 0
       logged_in: false
-      name: Admin
-      password: $2b$12$WzNVXOpECwM7/cyMLmHDXOpzUreYo3Aa9ZZSgoYPLfKsnZUkY3.NW
-
-    suhas:
+      name: Benjamin Kaitany
+      password: $2b$12$pHxMgRW9iGXiM7DrrV7DNuiFEjF2B1kaKt4Q8v/HTq/ym3wEHDAbW
+    jogendo:
       email: suhas11533@gmail.com
       failed_login_attempts: 0
       logged_in: false
-      name: Suhas
-      password: $2b$12$WzNVXOpECwM7/cyMLmHDXOpzUreYo3Aa9ZZSgoYPLfKsnZUkY3.NW
-
+      name: Jonam Ogendo
+      password: $2b$12$43mqvIzKnppoMBrL5AFOeulS1JQifMwA27HOxlkD23o9tVLa3GSNe
 pre-authorized:
   emails:
-    - suhas11533@gmail.com
+  - suhas11533@gmail.com
