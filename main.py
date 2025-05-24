@@ -145,6 +145,44 @@ class Inventory:
         product_names = [row[0] for row in rows]
         return product_names
 
+import sqlite3
+import pandas as pd
+import matplotlib.pyplot as plt
+import streamlit as st
+
+# Connect to DB and fetch data
+conn = sqlite3.connect('inventory.db')
+cursor = conn.cursor()
+cursor.execute('SELECT * FROM products')
+rows = cursor.fetchall()
+
+# Show current inventory textually
+st.subheader("**Current Inventory**")
+for name, quantity in rows:
+    st.write(f"{name}: {quantity} units.")
+
+# Convert rows to DataFrame
+df = pd.DataFrame(rows, columns=["Product", "Quantity"])
+
+# Bar chart
+fig_bar, ax_bar = plt.subplots()
+df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
+ax_bar.set_title("Inventory Stock Levels")
+ax_bar.set_ylabel("Quantity")
+ax_bar.set_xlabel("Product")
+ax_bar.set_xticklabels(df["Product"], rotation=45)
+st.pyplot(fig_bar)
+
+# Pie chart
+fig_pie, ax_pie = plt.subplots()
+ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
+ax_pie.axis("equal")
+ax_pie.set_title("Inventory Distribution")
+st.pyplot(fig_pie)
+
+conn.close()
+
+
  
 def main():
     # Check if user is authenticated
@@ -264,34 +302,16 @@ def main():
             else:
                 inventory.adjust_quantity(product_to_adjust, new_quantity)
      elif option == "View Stock":
-    st.subheader("**Current Inventory** :open_file_folder:")
-
-    cursor = inventory.conn.cursor()
-    cursor.execute('SELECT * FROM products')
-    rows = cursor.fetchall()
-
-    for name, quantity in rows:
-        if "bakers" in name.lower():
-            st.write(f"{name}: {quantity} bags.")
-        else:
-            st.write(f"{name}: {quantity} bales.")
-
-    df = pd.DataFrame(rows, columns=["Product", "Quantity"])
-
-    fig_bar, ax_bar = plt.subplots()
-    df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
-    ax_bar.set_title("Inventory Stock Levels")
-    ax_bar.set_ylabel("Quantity")
-    ax_bar.set_xlabel("Product")
-    ax_bar.set_xticklabels(df["Product"], rotation=45)
-    st.pyplot(fig_bar)
-
-    fig_pie, ax_pie = plt.subplots()
-    ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
-    ax_pie.axis("equal")
-    ax_pie.set_title("Inventory Distribution")
-    st.pyplot(fig_pie)
-
+        st.subheader("**Current Inventory** :open_file_folder:")
+        cursor = inventory.conn.cursor()
+        cursor.execute('''SELECT * FROM products''')
+        rows = cursor.fetchall()
+        for row in rows:
+            name, quantity = row
+            if "bakers" in name.lower():
+                st.write(f"{name}: {quantity} bags.")
+            else:
+                st.write(f"{name}: {quantity} bales.")
 
 
 
