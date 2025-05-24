@@ -270,6 +270,44 @@ def main():
             else:
                 st.write(f"{name}: {quantity} bales.")
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample inventory data (like what's fetched from SQLite)
+inventory_data = {
+    "Product": ["Taifa 1kg", "Bahari 2kg", "Bakers 25kg", "Chenga 1kg"],
+    "Quantity": [120, 80, 45, 150]
+}
+
+# Create DataFrame
+df = pd.DataFrame(inventory_data)
+
+# Generate bar chart
+fig_bar, ax_bar = plt.subplots()
+df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
+ax_bar.set_title("Inventory Stock Levels")
+ax_bar.set_ylabel("Quantity")
+ax_bar.set_xlabel("Product")
+ax_bar.set_xticklabels(df["Product"], rotation=45)
+
+# Generate pie chart
+fig_pie, ax_pie = plt.subplots()
+ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
+ax_pie.axis("equal")
+ax_pie.set_title("Inventory Distribution")
+
+# Save chart images
+bar_chart_path = "/mnt/data/inventory_bar_chart.png"
+pie_chart_path = "/mnt/data/inventory_pie_chart.png"
+df_path = "/mnt/data/inventory_data.csv"
+
+fig_bar.savefig(bar_chart_path, bbox_inches="tight")
+fig_pie.savefig(pie_chart_path, bbox_inches="tight")
+df.to_csv(df_path, index=False)
+
+(bar_chart_path, pie_chart_path, df_path)
+
+
 
 if __name__ == '__main__':
     main()
