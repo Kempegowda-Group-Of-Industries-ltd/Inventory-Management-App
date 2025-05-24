@@ -15,6 +15,10 @@ st.set_page_config(
 # Display app title and image
 st.title("Streamlit Inventory Tracker:dart:") 
 st.header(":rainbow[Automated SQLite Database Support]:sparkles:")
+st.info("🔐 **Hint:** Use `username: bkaitany` and `password: voodoo` for demo login.")
+
+# Optional code-style formatting
+st.code("username: bkaitany\npassword: voodoo", language="text")
 st.image("image/taifa2image.jpg")
 
 # Load hashed passwords
