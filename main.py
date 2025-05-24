@@ -283,8 +283,7 @@ class Inventory:
 # Create DataFrame
         inventory = Inventory()
         df = pd.DataFrame(inventory.db)
-            print(df)
-
+            
 # Generate bar chart
          fig_bar, ax_bar = plt.subplots()
           df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
