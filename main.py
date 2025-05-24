@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 # Display app title and image
-st.title("Streamlit Inventory Tracker:dart:") 
+st.title("Real Time Inventory Tracker:dart:") 
 st.header(":rainbow[Automated SQLite Database Support]:sparkles:")
 st.image("image/taifa2image.jpg")
 
@@ -128,6 +128,35 @@ class Inventory:
             name, quantity = row
             st.write(f"{name}: {quantity} units.")
 
+                import pandas as pd
+               import matplotlib.pyplot as plt
+               import streamlit as st
+
+                cursor = self.conn.cursor()
+                 cursor.execute('''SELECT * FROM products''')
+                 rows = cursor.fetchall()
+
+                st.subheader("📦 Current Inventory")
+
+# Create DataFrame
+                      df = pd.DataFrame(rows, columns=["Product", "Quantity"])
+
+# Show interactive table
+                     st.dataframe(df)
+
+# Bar chart
+                        st.subheader("📊 Stock Levels - Bar Chart")
+                         st.bar_chart(df.set_index("Product"))
+
+# Pie chart
+                    st.subheader("🧁 Inventory Distribution - Pie Chart")
+                         fig, ax = plt.subplots()
+                    ax.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
+             ax.axis("equal")
+                       st.pyplot(fig)
+
+   
+    
     # Retrieving product names
     def get_product_names(self):
         cursor = self.conn.cursor()
@@ -266,6 +295,35 @@ def main():
             else:
                 st.write(f"{name}: {quantity} bales.")
 
+# Step 2: Load data for visualization
+df = pd.read_sql_query("SELECT * FROM products", conn)
+conn.close()
+
+# Step 3: Generate bar chart
+fig_bar, ax_bar = plt.subplots()
+df.set_index("name")["quantity"].plot(kind="bar", ax=ax_bar, color="coral")
+ax_bar.set_title("Inventory Stock Levels")
+ax_bar.set_ylabel("Quantity")
+ax_bar.set_xlabel("Product")
+ax_bar.set_xticklabels(df["name"], rotation=45)
+
+# Step 4: Generate pie chart
+fig_pie, ax_pie = plt.subplots()
+ax_pie.pie(df["quantity"], labels=df["name"], autopct="%1.1f%%", startangle=90)
+ax_pie.axis("equal")
+ax_pie.set_title("Inventory Distribution")
+
+# Save charts and table
+bar_chart_path = "/mnt/data/final_bar_chart.png"
+pie_chart_path = "/mnt/data/final_pie_chart.png"
+table_path = "/mnt/data/final_inventory_table.csv"
+db_path = "/mnt/data/inventory.db"
+
+fig_bar.savefig(bar_chart_path, bbox_inches="tight")
+fig_pie.savefig(pie_chart_path, bbox_inches="tight")
+df.to_csv(table_path, index=False)
+
+(bar_chart_path, pie_chart_path, table_path, db_path)
 
 if __name__ == '__main__':
     main()
