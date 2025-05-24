@@ -272,18 +272,46 @@ def main():
             else:
                 st.write(f"{name}: {quantity} bales.")
 
+import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
 
 class Inventory:
     def __init__(self):
- self.conn = sqlite3.connect('inventory.db')
- self.create_table()
+        self.conn = sqlite3.connect('inventory.db')  # Proper indentation here
+        self.create_table()
+        self.db = self.load_inventory()  # Assume we load inventory data into self.db
 
-# Create DataFrame
+    def create_table(self):
+        # Create table if not exists (example)
+        cursor = self.conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS products (
+                Product TEXT PRIMARY KEY,
+                Quantity INTEGER
+            )
+        ''')
+        self.conn.commit()
+
+    def load_inventory(self):
+        # Fetch inventory from DB into a list of dicts for the DataFrame
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT Product, Quantity FROM products")
+        rows = cursor.fetchall()
+        # Convert to list of dicts
+        return [{"Product": row[0], "Quantity": row[1]} for row in rows]
+
+# Instantiate inventory
 inventory = Inventory()
+
+# Create DataFrame from loaded inventory data
 df = pd.DataFrame(inventory.db)
-            
+
+# Define paths for saving charts and CSV (example paths)
+bar_chart_path = "bar_chart.png"
+pie_chart_path = "pie_chart.png"
+df_path = "inventory.csv"
+
 # Generate bar chart
 fig_bar, ax_bar = plt.subplots()
 df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
@@ -298,10 +326,11 @@ ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=9
 ax_pie.axis("equal")
 ax_pie.set_title("Inventory Distribution")
 
-# Save chart images
+# Save chart images and CSV
 fig_bar.savefig(bar_chart_path, bbox_inches="tight")
 fig_pie.savefig(pie_chart_path, bbox_inches="tight")
 df.to_csv(df_path, index=False)
+
 
 # (bar_chart_path, pie_chart_path, df_path)  # This line seems out of place, maybe remove or use properly
 
