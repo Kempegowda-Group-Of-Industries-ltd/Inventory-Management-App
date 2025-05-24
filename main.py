@@ -301,7 +301,7 @@ def main():
                 st.error("Quantity must be a non-negative integer.", icon="🚨")
             else:
                 inventory.adjust_quantity(product_to_adjust, new_quantity)
-     elif option == "View Stock":
+    elif option == "View Stock":
         st.subheader("**Current Inventory** :open_file_folder:")
         cursor = inventory.conn.cursor()
         cursor.execute('''SELECT * FROM products''')
@@ -312,7 +312,6 @@ def main():
                 st.write(f"{name}: {quantity} bags.")
             else:
                 st.write(f"{name}: {quantity} bales.")
-
 
 
       
