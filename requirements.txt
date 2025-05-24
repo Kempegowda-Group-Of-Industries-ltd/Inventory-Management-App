@@ -1,2 +1,8 @@
 streamlit==1.37.0
 streamlit-authenticator==0.3.2
+
+pandas
+matplotlib
+plotly
+sqlite3  # NOTE: Comes built-in with Python, no need to install
+bcrypt   # Only if using hashed passwords
