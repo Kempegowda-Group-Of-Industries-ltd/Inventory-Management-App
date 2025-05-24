@@ -69,13 +69,11 @@ Contributions are welcome! If you find any issues or have suggestions, please fe
 
 The application can be customized to monitor inventory for any business setup as per your preference.
 
-## License
 
-This project is licensed under the [<https://opensource.org/license/mit/>](LICENSE).
 
 ---
 
 <p align="center">
-  Made by Benjamin Kaitany
+  Made by KGI
 </p>
 
