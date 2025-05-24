@@ -51,6 +51,8 @@ class Inventory:
     def __init__(self):
         self.conn = sqlite3.connect('inventory.db')
         self.create_table()
+
+    
     
     def create_table(self):
         cursor = self.conn.cursor()
@@ -275,7 +277,7 @@ import matplotlib.pyplot as plt
 
 
 # Create DataFrame
-df = pd.DataFrame(inventory_data)
+df = pd.DataFrame(inventory.db)
 
 # Generate bar chart
 fig_bar, ax_bar = plt.subplots()
@@ -292,10 +294,6 @@ ax_pie.axis("equal")
 ax_pie.set_title("Inventory Distribution")
 
 # Save chart images
-bar_chart_path = "/mnt/data/inventory_bar_chart.png"
-pie_chart_path = "/mnt/data/inventory_pie_chart.png"
-df_path = "/mnt/data/inventory_data.csv"
-
 fig_bar.savefig(bar_chart_path, bbox_inches="tight")
 fig_pie.savefig(pie_chart_path, bbox_inches="tight")
 df.to_csv(df_path, index=False)
