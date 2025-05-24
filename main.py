@@ -123,14 +123,36 @@ class Inventory:
         else:
             st.write("Product not found in inventory.")       
 
-    def view_stock(self):
-        cursor = self.conn.cursor()
-        cursor.execute('''SELECT * FROM products''')
-        rows = cursor.fetchall()
-        st.subheader("**Current Inventory**")
-        for row in rows:
-            name, quantity = row
-            st.write(f"{name}: {quantity} units.")
+    import streamlit as st
+import pandas as pd
+
+def view_stock(self):
+    cursor = self.conn.cursor()
+    cursor.execute('''SELECT * FROM products''')
+    rows = cursor.fetchall()
+
+    st.subheader("📦 **Current Inventory**")
+
+    # Display inventory as text
+    for row in rows:
+        name, quantity = row
+        st.write(f"{name}: {quantity} units")
+
+    # Create a DataFrame for visualization
+    df = pd.DataFrame(rows, columns=["Product", "Quantity"])
+
+    # Simple bar chart
+    st.subheader("📊 Inventory Stock Levels")
+    st.bar_chart(df.set_index("Product"))
+
+    import matplotlib.pyplot as plt
+
+    # Pie chart visualization
+    fig, ax = plt.subplots()
+    ax.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%")
+    ax.axis("equal")  # Equal aspect ratio for a circular pie
+    st.pyplot(fig)
+
 
     # Retrieving product names
     def get_product_names(self):
