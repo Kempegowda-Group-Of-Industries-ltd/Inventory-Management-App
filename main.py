@@ -3,7 +3,10 @@ import sqlite3
 import streamlit_authenticator as stauth
 import yaml
 from yaml.loader import SafeLoader
-
+import sqlite3
+import pandas as pd
+import matplotlib.pyplot as plt
+import streamlit as st
 # Set page configuration
 st.set_page_config(
     page_title="Inventory Management App",
@@ -261,53 +264,38 @@ def main():
             else:
                 inventory.adjust_quantity(product_to_adjust, new_quantity)
     elif option == "View Stock":
-        st.subheader("**Current Inventory** :open_file_folder:")
-        cursor = inventory.conn.cursor()
-        cursor.execute('''SELECT * FROM products''')
-        rows = cursor.fetchall()
-        for row in rows:
-            name, quantity = row
-            if "bakers" in name.lower():
-                st.write(f"{name}: {quantity} bags.")
-            else:
-                st.write(f"{name}: {quantity} bales.")
+    st.subheader("**Current Inventory** :open_file_folder:")
 
-import sqlite3
-import pandas as pd
-import matplotlib.pyplot as plt
-import streamlit as st         
+    # Use your existing inventory connection
+    cursor = inventory.conn.cursor()
+    cursor.execute('SELECT * FROM products')
+    rows = cursor.fetchall()
 
-# Connect to DB and fetch data
-conn = sqlite3.connect('inventory.db')
-cursor = conn.cursor()
-cursor.execute('SELECT * FROM products')
-rows = cursor.fetchall()
+    # Display inventory textually with conditional units
+    for name, quantity in rows:
+        if "bakers" in name.lower():
+            st.write(f"{name}: {quantity} bags.")
+        else:
+            st.write(f"{name}: {quantity} bales.")
 
-# Show current inventory textually
-st.subheader("**Current Inventory**")
-for name, quantity in rows:
-    st.write(f"{name}: {quantity} units.")
+    # Convert rows to DataFrame for charts
+    df = pd.DataFrame(rows, columns=["Product", "Quantity"])
 
-# Convert rows to DataFrame
-df = pd.DataFrame(rows, columns=["Product", "Quantity"])
+    # Bar chart
+    fig_bar, ax_bar = plt.subplots()
+    df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
+    ax_bar.set_title("Inventory Stock Levels")
+    ax_bar.set_ylabel("Quantity")
+    ax_bar.set_xlabel("Product")
+    ax_bar.set_xticklabels(df["Product"], rotation=45)
+    st.pyplot(fig_bar)
 
-# Bar chart
-fig_bar, ax_bar = plt.subplots()
-df.set_index("Product")["Quantity"].plot(kind="bar", ax=ax_bar, color="skyblue")
-ax_bar.set_title("Inventory Stock Levels")
-ax_bar.set_ylabel("Quantity")
-ax_bar.set_xlabel("Product")
-ax_bar.set_xticklabels(df["Product"], rotation=45)
-st.pyplot(fig_bar)
-
-# Pie chart
-fig_pie, ax_pie = plt.subplots()
-ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
-ax_pie.axis("equal")
-ax_pie.set_title("Inventory Distribution")
-st.pyplot(fig_pie)
-
-conn.close()
+    # Pie chart
+    fig_pie, ax_pie = plt.subplots()
+    ax_pie.pie(df["Quantity"], labels=df["Product"], autopct="%1.1f%%", startangle=90)
+    ax_pie.axis("equal")
+    ax_pie.set_title("Inventory Distribution")
+    st.pyplot(fig_pie)
 
 
 
