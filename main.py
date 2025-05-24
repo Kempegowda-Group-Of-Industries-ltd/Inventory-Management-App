@@ -277,12 +277,12 @@ import matplotlib.pyplot as plt
 
 class Inventory:
     def __init__(self):
-        self.conn = sqlite3.connect('inventory.db')
-        self.create_table()
+ self.conn = sqlite3.connect('inventory.db')
+ self.create_table()
 
 # Create DataFrame
-        inventory = Inventory()
-        df = pd.DataFrame(inventory.db)
+inventory = Inventory()
+df = pd.DataFrame(inventory.db)
             
 # Generate bar chart
 fig_bar, ax_bar = plt.subplots()
