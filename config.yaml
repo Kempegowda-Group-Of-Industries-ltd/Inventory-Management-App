@@ -5,17 +5,17 @@ cookie:
 credentials:
   usernames:
     bkaitany:
-      email: suhas11533@gmail.com
+      email: benjaminkipkem@gmail.com
       failed_login_attempts: 0
       logged_in: false
       name: Benjamin Kaitany
       password: $2b$12$pHxMgRW9iGXiM7DrrV7DNuiFEjF2B1kaKt4Q8v/HTq/ym3wEHDAbW
     jogendo:
-      email: suhas11533@gmail.com
+      email: jogendo@gmail.com
       failed_login_attempts: 0
       logged_in: false
       name: Jonam Ogendo
       password: $2b$12$43mqvIzKnppoMBrL5AFOeulS1JQifMwA27HOxlkD23o9tVLa3GSNe
 pre-authorized:
   emails:
-  - suhas11533@gmail.com
+  - benjaminkipkem@gmail.com
