@@ -26,7 +26,7 @@ To use the Streamlit Inventory Management App, use below link:
 
 |  Deployed App |
 |------:|
-| [Streamlit Inventory Management App](https://inventory-management-app.streamlit.app/) |
+| [Streamlit Inventory Management App](https://newinvent.streamlit.app/) |
 
 The app will display the user interface, requesting login credentials.
 
@@ -36,44 +36,9 @@ For trial purposes, you can use the following login details:
 
 **password:** voodoo
 
-## Installation
 
-To run the Streamlit Inventory Management App locally for trial purposes, follow these steps:
-
-1. Clone this repository: 
-
-     ```bash
-     git clone https://github.com/kaitany/Inventory-Management-App
-     ```
-
-2. Navigate to the project folder:
-
-     ```bash
-     cd Inventory-Management-App
-     ```
-3. Install the required dependencies:
-
-     ```bash 
-     pip install -r requirements.txt
-     ```
-4. Run the Streamlit app: 
-
-    ```bash 
-    streamlit run main.py
-    ```
-
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions, please feel free to open an issue or submit a pull request.
-
-The application can be customized to monitor inventory for any business setup as per your preference.
-
-
-
----
 
 <p align="center">
-  Made by KGI
+  Made by Kempegowda Group Of Industries
 </p>
 
