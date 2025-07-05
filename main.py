@@ -68,6 +68,13 @@ class Inventory:
                           )''')
         self.conn.commit()
 
+    cursor = self.conn.cursor()CREATE TABLE IF NOT EXISTS transactions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_name TEXT,
+    action TEXT,
+    quantity INTEGER,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_name) REFERENCES products(name));
     def add_product_to_db(self, name, quantity):
         #capitalize name
         name=name.capitalize()
