@@ -20,6 +20,9 @@ st.title("Streamlit Inventory Tracker:dart:")
 st.header(":rainbow[Automated SQLite Database Support]:sparkles:")
 st.info("🔐 **Hint:** Use `username: bkaitany` and `password: voodoo` for demo login.")
 
+url = "https://newinvent.streamlit.app/"
+st.markdown(f"[vissu ]({url})", unsafe_allow_html=True)
+
 # Optional code-style formatting
 st.code("username: bkaitany\npassword: voodoo", language="text")
 st.image("image/taifa2image.jpg")
