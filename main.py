@@ -58,6 +58,7 @@ class Inventory:
         self.conn = sqlite3.connect('inventory.db')
         self.create_table()
 
+
     
     
     def create_table(self):
@@ -68,13 +69,7 @@ class Inventory:
                           )''')
         self.conn.commit()
 
-    cursor = self.conn.cursor()CREATE TABLE IF NOT EXISTS transactions (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    product_name TEXT,
-    action TEXT,
-    quantity INTEGER,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_name) REFERENCES products(name));
+   
     def add_product_to_db(self, name, quantity):
         #capitalize name
         name=name.capitalize()
@@ -317,7 +312,15 @@ def main():
                 st.write(f"{name}: {quantity} bales.")
 
 
-      
+    elif option == "View Transactions":
+    st.subheader("**Transaction History** :receipt:")
+    conn = sqlite3.connect('inventory.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM transactions ORDER BY timestamp DESC")
+    rows = cursor.fetchall()
+    df = pd.DataFrame(rows, columns=["ID", "Product Name", "Action", "Quantity", "Timestamp"])
+    st.dataframe(df)
+  
 
 
 
